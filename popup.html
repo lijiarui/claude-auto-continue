@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Claude Auto Continue</title>
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --fg: #1c1917;
+      --muted: #78716c;
+      --border: #e7e5e4;
+      --accent: #c2410c;
+      --accent-bg: #fff7ed;
+    }
+    * { box-sizing: border-box; }
+    body {
+      width: 320px;
+      margin: 0;
+      padding: 16px;
+      font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+    }
+    h1 {
+      font-size: 14px;
+      margin: 0 0 12px;
+      font-weight: 600;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+    }
+    .switch input { display: none; }
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #d6d3d1;
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 2px; top: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: transform .15s;
+    }
+    .switch input:checked + .slider {
+      background: var(--accent);
+    }
+    .switch input:checked + .slider::before {
+      transform: translateX(18px);
+    }
+    .stat {
+      padding: 8px 10px;
+      background: var(--accent-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 10px 0;
+    }
+    .stat strong { color: var(--fg); font-weight: 600; }
+    label.block {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 12px 0 4px;
+    }
+    textarea {
+      width: 100%;
+      font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      resize: vertical;
+      background: white;
+      color: var(--fg);
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .hint {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 2px 0 0;
+    }
+    .buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    button {
+      flex: 1;
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--fg);
+    }
+    button:hover { background: var(--accent-bg); }
+    button.primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    button.primary:hover {
+      background: #9a3412;
+    }
+    .toast {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--accent);
+      min-height: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Claude Auto Continue</h1>
+
+  <div class="row">
+    <span>启用自动点击</span>
+    <label class="switch">
+      <input type="checkbox" id="enabled">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="stat">
+    已自动点击 <strong id="count">0</strong> 次
+    <div id="last" style="margin-top:2px;"></div>
+  </div>
+
+  <label class="block" for="include">匹配这些按钮文本</label>
+  <textarea id="include" rows="4" placeholder="每行一个"></textarea>
+  <div class="hint">大小写不敏感，支持精确或前缀匹配。</div>
+
+  <label class="block" for="exclude">排除含这些子串的按钮</label>
+  <textarea id="exclude" rows="3" placeholder="每行一个"></textarea>
+  <div class="hint">防止误点登录 / 取消 / 删除等按钮。</div>
+
+  <div class="buttons">
+    <button id="save" class="primary">保存</button>
+    <button id="reset">重置默认</button>
+    <button id="clear-count">清零计数</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+*.pyc
+
+# Chrome Web Store packaging artifacts — never commit private key
+*.crx
+*.pem
+
+# 本地 IDE
+.vscode/
+.idea/

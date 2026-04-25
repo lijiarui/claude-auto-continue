@@ -1,8 +1,15 @@
 # Claude Auto Continue
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/lijiarui/claude-auto-continue?color=facc15)](https://github.com/lijiarui/claude-auto-continue/releases)
+[![GitHub stars](https://img.shields.io/github/stars/lijiarui/claude-auto-continue?style=flat&color=facc15)](https://github.com/lijiarui/claude-auto-continue/stargazers)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-4285F4)](manifest.json)
+
 自动点击 claude.ai 上的 Continue / 继续生成 按钮。
 
 ![icon](icons/icon128.png)
+
+> 落地页：https://lijiarui.github.io/claude-auto-continue/
 
 ## 它解决什么
 
@@ -66,7 +73,7 @@ claude-auto-continue/
 ├── popup.js          # 设置读写 + 计数显示
 ├── make_icons.py     # 生成图标的脚本
 ├── icons/            # 16/32/48/128 PNG
-└── website/          # 落地页（用于 Chrome Web Store 发布）
+└── docs/             # 落地页（GitHub Pages 自动部署）
 ```
 
 ## 开发

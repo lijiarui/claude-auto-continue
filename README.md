@@ -16,9 +16,13 @@
 
 ## 安装（开发者模式）
 
+```bash
+git clone https://github.com/lijiarui/claude-auto-continue.git
+```
+
 1. 打开 `chrome://extensions`
 2. 右上角打开 **开发者模式**
-3. 点 **加载未打包的扩展程序**，选这个目录
+3. 点 **加载未打包的扩展程序**，选 clone 下来的 `claude-auto-continue/` 目录
 4. 打开（或刷新）任意 claude.ai 标签即可
 
 > 已发布版本上线后会更新这里的 Chrome Web Store 链接。

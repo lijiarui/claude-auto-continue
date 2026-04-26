@@ -382,6 +382,122 @@ def make_marquee():
     print("  ✓ store-marquee-1400x560.png")
 
 
+# ────────────────────────────────────────────────────────────────────
+# 6. 小红书封面 1080x1440 (3:4 竖版) + 第二张内容图
+# ────────────────────────────────────────────────────────────────────
+
+def make_xiaohongshu_cover():
+    W, H = 1080, 1440
+    img = Image.new("RGB", (W, H), YELLOW)
+    d = ImageDraw.Draw(img)
+
+    # 顶部小标
+    paste_icon(img, 90, (60, 70))
+    d.text((170, 90), "Claude Auto Continue",
+           font=cn(28, bold=True), fill=BLACK)
+    d.text((170, 130), "/ Chrome 扩展", font=cn(22), fill=BLACK)
+
+    # 主标题（大字，三行）
+    d.text((60, 320), "再也不用", font=cn(110, bold=True), fill=BLACK)
+    d.text((60, 460), "点 Continue", font=cn(110, bold=True), fill=BLACK)
+    d.text((60, 600), "了", font=cn(110, bold=True), fill=BLACK)
+
+    # 中段说明
+    d.text((60, 800),
+           "Claude.ai 一天点几十次 Continue",
+           font=cn(34), fill=BLACK)
+    d.text((60, 850),
+           "我做了个扩展替我点",
+           font=cn(34), fill=BLACK)
+
+    # 底部强调（黑色色块 + 白字）
+    rect_y = 1100
+    d.rectangle([60, rect_y, W - 60, rect_y + 200], fill=BLACK)
+    d.text((90, rect_y + 30), "开源 · 本地运行", font=cn(36, bold=True), fill=YELLOW)
+    d.text((90, rect_y + 90), "MIT License", font=cn(28), fill=BG_WHITE)
+    d.text((90, rect_y + 140),
+           "github.com/lijiarui/claude-auto-continue",
+           font=cn(22), fill=BG_WHITE)
+
+    # 右上角"5 分钟"圆形贴纸
+    cx, cy, r = 920, 230, 100
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=BLACK)
+    d.text((cx - 50, cy - 60), "5 分钟", font=cn(28, bold=True), fill=YELLOW)
+    d.text((cx - 50, cy - 20), "搞定", font=cn(36, bold=True), fill=BG_WHITE)
+    d.text((cx - 50, cy + 30), "免费", font=cn(28), fill=YELLOW)
+
+    img.save(OUT / "xiaohongshu-cover-1080x1440.png", optimize=True)
+    print("  ✓ xiaohongshu-cover-1080x1440.png")
+
+
+def make_xiaohongshu_value():
+    """第二张：放大版的"自动点击"价值传达，3:4 竖版。"""
+    W, H = 1080, 1440
+    img = Image.new("RGB", (W, H), BG_CREAM)
+    d = ImageDraw.Draw(img)
+
+    # 顶部标题
+    d.text((60, 80), "原本：", font=cn(36, bold=True), fill=GRAY_TEXT)
+    d.text((60, 140), "你手动点 Continue", font=cn(50, bold=True), fill=BLACK)
+
+    # 模拟 claude.ai 的提示卡
+    card_x, card_y, card_w, card_h = 60, 240, W - 120, 130
+    rounded_rect(d, [card_x, card_y, card_x + card_w, card_y + card_h], 14,
+                 fill=BG_WHITE, outline=GRAY_BORDER, width=2)
+    info_cx, info_cy = card_x + 50, card_y + card_h // 2
+    d.ellipse([info_cx - 16, info_cy - 16, info_cx + 16, info_cy + 16],
+              fill=GRAY_LIGHT, outline=GRAY_BORDER, width=2)
+    d.text((info_cx - 5, info_cy - 14), "i", font=cn(22, bold=True), fill=GRAY_TEXT)
+    d.text((card_x + 100, card_y + 30),
+           "Claude reached its", font=en(22), fill=GRAY_TEXT)
+    d.text((card_x + 100, card_y + 60),
+           "tool-use limit for this turn.", font=en(22), fill=GRAY_TEXT)
+    btn_w, btn_h = 130, 50
+    btn_x = card_x + card_w - btn_w - 30
+    btn_y = card_y + (card_h - btn_h) // 2
+    rounded_rect(d, [btn_x, btn_y, btn_x + btn_w, btn_y + btn_h], 8,
+                 fill=BG_WHITE, outline=GRAY_BORDER, width=2)
+    tw = text_w(d, "Continue", en(22, bold=True))
+    d.text((btn_x + (btn_w - tw) // 2, btn_y + 14),
+           "Continue", font=en(22, bold=True), fill=BLACK)
+
+    # 中间：大箭头
+    d.text((W // 2 - 30, 440), "↓", font=cn(80, bold=True), fill=YELLOW_DARK)
+
+    # 装上扩展之后
+    d.text((60, 580), "现在：", font=cn(36, bold=True), fill=GRAY_TEXT)
+    d.text((60, 640), "扩展替你点掉", font=cn(50, bold=True), fill=BLACK)
+
+    # 黄色卡片（高亮）
+    yc_x, yc_y, yc_w, yc_h = 60, 740, W - 120, 200
+    rounded_rect(d, [yc_x, yc_y, yc_x + yc_w, yc_y + yc_h], 14, fill=YELLOW)
+    paste_icon(img, 80, (yc_x + 40, yc_y + 60))
+    d.text((yc_x + 150, yc_y + 50),
+           "已自动点 87 次", font=cn(48, bold=True), fill=BLACK)
+    d.text((yc_x + 150, yc_y + 120),
+           "今日 0 次手动操作", font=cn(28), fill=BLACK)
+
+    # 底部三层防护
+    d.text((60, 1010), "三层防误点：", font=cn(28, bold=True), fill=BLACK)
+    bullets = [
+        "1. Allowlist：只点 Continue / 继续 / 继续生成",
+        "2. Exclude：跳过 Continue with / Cancel / 删除",
+        "3. 节流：1.5s 间隔，同按钮 3s 内不重点",
+    ]
+    for i, line in enumerate(bullets):
+        by_ = 1070 + i * 50
+        d.ellipse([60, by_ + 12, 76, by_ + 28], fill=YELLOW_DARK)
+        d.text((96, by_), line, font=cn(24), fill=BLACK)
+
+    # 底部
+    d.text((60, 1340),
+           "github.com/lijiarui/claude-auto-continue",
+           font=cn(22), fill=GRAY_TEXT)
+
+    img.save(OUT / "xiaohongshu-value-1080x1440.png", optimize=True)
+    print("  ✓ xiaohongshu-value-1080x1440.png")
+
+
 if __name__ == "__main__":
     print("Generating Chrome Web Store assets...")
     make_hero()
@@ -389,4 +505,7 @@ if __name__ == "__main__":
     make_flow()
     make_promo()
     make_marquee()
+    print("\nGenerating 小红书 assets...")
+    make_xiaohongshu_cover()
+    make_xiaohongshu_value()
     print(f"\nAll assets in: {OUT}")

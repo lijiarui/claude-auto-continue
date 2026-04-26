@@ -1,5 +1,8 @@
 # Claude Auto Continue
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dmgebhjdnndbihlldbdgafaafgepmhgj?color=facc15&label=Chrome%20Web%20Store)](https://chrome.google.com/webstore/detail/dmgebhjdnndbihlldbdgafaafgepmhgj)
+[![Users](https://img.shields.io/chrome-web-store/users/dmgebhjdnndbihlldbdgafaafgepmhgj?color=facc15)](https://chrome.google.com/webstore/detail/dmgebhjdnndbihlldbdgafaafgepmhgj)
+[![Rating](https://img.shields.io/chrome-web-store/rating/dmgebhjdnndbihlldbdgafaafgepmhgj?color=facc15)](https://chrome.google.com/webstore/detail/dmgebhjdnndbihlldbdgafaafgepmhgj)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/lijiarui/claude-auto-continue?color=facc15)](https://github.com/lijiarui/claude-auto-continue/releases)
 [![GitHub stars](https://img.shields.io/github/stars/lijiarui/claude-auto-continue?style=flat&color=facc15)](https://github.com/lijiarui/claude-auto-continue/stargazers)
@@ -9,7 +12,7 @@
 
 ![icon](icons/icon128.png)
 
-> 落地页：https://lijiarui.github.io/claude-auto-continue/
+> 落地页：https://rui.juzi.bot/claude-auto-continue/
 
 ## 它解决什么
 

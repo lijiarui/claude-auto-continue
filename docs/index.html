@@ -7,7 +7,13 @@
   <meta name="description" content="一个 Chrome 扩展。它在 claude.ai 上自动点击 Continue / 继续生成 按钮。安全、本地、可关。">
   <meta property="og:title" content="Claude Auto Continue">
   <meta property="og:description" content="不用再手动点 Continue。一个 Chrome 扩展，干一件事，干好。">
-  <meta property="og:image" content="og.png">
+  <meta property="og:image" content="https://raw.githubusercontent.com/lijiarui/claude-auto-continue/main/marketing/output/store-marquee-1400x560.png">
+  <meta property="og:url" content="https://rui.juzi.bot/claude-auto-continue/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Auto Continue">
+  <meta name="twitter:description" content="不用再手动点 Continue。一个 Chrome 扩展，干一件事，干好。">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/lijiarui/claude-auto-continue/main/marketing/output/store-marquee-1400x560.png">
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/lijiarui/claude-auto-continue/main/icons/icon128.png">
   <style>
     :root {
@@ -95,69 +101,61 @@
     }
     .cta-secondary:hover { color: var(--yellow-dark); }
     .demo {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      margin: 16px 0 56px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin: 8px 0 56px;
     }
-    .demo .prompt-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--code-bg);
-      font-size: 14px;
-      color: var(--muted);
-    }
-    .demo .prompt-row .info {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--border);
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .demo .prompt-row .text { flex: 1; }
-    .demo .prompt-row button {
-      background: white;
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
+    .demo-frame {
       position: relative;
+      border-radius: 14px;
+      overflow: visible;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+      background: white;
     }
-    .demo .arrow {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      padding: 8px 0;
+    .demo-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
     }
-    .demo .auto-clicked {
-      position: relative;
-    }
-    .demo .auto-clicked::after {
-      content: '✓ 已自动点';
+    /* 黄色高亮圈套住截图里的 Continue 按钮 */
+    .demo-frame .highlight {
       position: absolute;
-      top: -8px;
-      right: -16px;
+      /* 这些百分比对应截图里 Continue 按钮的位置 */
+      left: 77%;
+      top: 78.5%;
+      width: 17%;
+      height: 9%;
+      border: 3px solid var(--yellow);
+      border-radius: 10px;
+      box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.25),
+                  0 0 24px rgba(250, 204, 21, 0.5);
+      pointer-events: none;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.25), 0 0 24px rgba(250, 204, 21, 0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(250, 204, 21, 0.15), 0 0 32px rgba(250, 204, 21, 0.7); }
+    }
+    .demo-frame .badge {
+      position: absolute;
+      left: 60%;
+      top: 73%;
       background: var(--yellow);
       color: var(--fg);
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
       font-weight: 600;
-      transform: rotate(8deg);
+      transform: rotate(-4deg);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
+    .demo-caption {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 16px;
+    }
+    .demo-caption strong { color: var(--fg); }
     h2 {
       font-size: 28px;
       font-weight: 700;
@@ -283,23 +281,19 @@
     </section>
 
     <section class="demo">
-      <div class="prompt-row">
-        <span class="info">i</span>
-        <span class="text">Claude reached its tool-use limit for this turn.</span>
-        <button class="auto-clicked">Continue</button>
+      <div class="demo-frame">
+        <img src="screenshots/continue-prompt.jpeg" alt="claude.ai 上的 tool-use limit 提示">
+        <div class="badge">✓ 自动点击</div>
+        <div class="highlight"></div>
       </div>
-      <div class="arrow">↓ 你不用动手</div>
-      <div class="prompt-row" style="background:#fff7ed; border-color:#fed7aa;">
-        <span class="info" style="background:var(--yellow); color:var(--fg);">✓</span>
-        <span class="text">已自动点击，对话继续。计数器 +1。</span>
-      </div>
+      <p class="demo-caption">真实场景。看到这个就替你点，<strong>对话不中断</strong>。</p>
     </section>
 
-    <h2>为什么需要它</h2>
-    <p>在 claude.ai 用得久的人都见过这几条提示：单轮工具调用超限、回复被 token 截断、长会话警告。每次都得手动戳一下。</p>
-    <p>如果你做数据分析、查飞书、跑搜索，一天能撞上几十次。这个扩展守在页面上，看到符合规则的按钮就点。</p>
+    <h2>它解决什么</h2>
+    <p>claude.ai 单轮工具调用约 20 次就会撞上 <code>Claude reached its tool-use limit for this turn.</code>，要手动点 Continue 才能继续。回复被 max_tokens 截断、长会话警告，也都是同一类提示。</p>
+    <p>做数据分析、跑 MCP、连飞书 / Drive 的人，一天踩几十次。这个扩展守在页面上，按钮一出现就替你点。</p>
 
-    <h2>它怎么做到不出错</h2>
+    <h2>它怎么不出错</h2>
     <div class="features">
       <div class="feature">
         <span class="label">Allowlist</span>

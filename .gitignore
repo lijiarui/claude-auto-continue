@@ -9,3 +9,9 @@ __pycache__/
 # 本地 IDE
 .vscode/
 .idea/
+
+# 个人 TODO / 笔记，不进 git
+todo-*.md
+
+# 商店打包产物
+*.zip

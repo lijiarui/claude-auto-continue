@@ -295,10 +295,98 @@ def make_promo():
     print("  ✓ promo-tile-440x280.png")
 
 
+# ────────────────────────────────────────────────────────────────────
+# 5. Marquee promo tile 1400x560 — 商店首页轮播大图
+# ────────────────────────────────────────────────────────────────────
+
+def make_marquee():
+    W, H = 1400, 560
+    img = Image.new("RGB", (W, H), BG_CREAM)
+    d = ImageDraw.Draw(img)
+
+    # 左侧黄色背景块（占 55%）
+    split_x = int(W * 0.55)
+    d.rectangle([0, 0, split_x, H], fill=YELLOW)
+
+    # 左侧：logo + 标题
+    paste_icon(img, 80, (60, 60))
+    d.text((160, 78), "Claude Auto Continue",
+           font=cn(28, bold=True), fill=BLACK)
+
+    # 大标题
+    d.text((60, 200), "不用再手动点", font=cn(64, bold=True), fill=BLACK)
+    d.text((60, 280), "Continue。", font=cn(64, bold=True), fill=BLACK)
+
+    # 副文案
+    d.text((60, 400),
+           "一个 Chrome 扩展。它替你点。",
+           font=cn(22), fill=BLACK)
+    d.text((60, 432),
+           "安全、本地、可关。",
+           font=cn(22), fill=BLACK)
+
+    # 右侧：仿 claude.ai 的提示卡片
+    card_x = split_x + 60
+    card_y = 200
+    card_w = W - card_x - 60
+    card_h = 110
+    rounded_rect(d, [card_x, card_y, card_x + card_w, card_y + card_h], 12,
+                 fill=BG_WHITE, outline=GRAY_BORDER, width=1)
+
+    # info 圆圈
+    info_cx, info_cy = card_x + 38, card_y + card_h // 2
+    d.ellipse([info_cx - 12, info_cy - 12, info_cx + 12, info_cy + 12],
+              fill=GRAY_LIGHT, outline=GRAY_BORDER, width=1)
+    d.text((info_cx - 3, info_cy - 9), "i", font=cn(16, bold=True), fill=GRAY_TEXT)
+
+    # limit 文案
+    d.text((card_x + 64, card_y + 32),
+           "Claude reached its tool-use",
+           font=en(16), fill=GRAY_TEXT)
+    d.text((card_x + 64, card_y + 56),
+           "limit for this turn.",
+           font=en(16), fill=GRAY_TEXT)
+
+    # Continue 按钮
+    btn_w, btn_h = 100, 40
+    btn_x = card_x + card_w - btn_w - 20
+    btn_y = card_y + (card_h - btn_h) // 2
+    rounded_rect(d, [btn_x, btn_y, btn_x + btn_w, btn_y + btn_h], 8,
+                 fill=BG_WHITE, outline=GRAY_BORDER, width=1)
+    btn_text = "Continue"
+    tw = text_w(d, btn_text, en(16, bold=True))
+    d.text((btn_x + (btn_w - tw) // 2, btn_y + 11), btn_text,
+           font=en(16, bold=True), fill=BLACK)
+
+    # 黄色"已自动点"徽章
+    badge_text = "已自动点"
+    bw = text_w(d, badge_text, cn(14, bold=True))
+    bx = btn_x + btn_w - bw // 2 - 8
+    by = btn_y - 14
+    rounded_rect(d, [bx - 12, by - 4, bx + bw + 12, by + 22], 12, fill=YELLOW)
+    d.text((bx, by), badge_text, font=cn(14, bold=True), fill=BLACK)
+
+    # 下方箭头 + 状态
+    arrow_y = card_y + card_h + 30
+    d.text((card_x + 30, arrow_y), "↓", font=cn(20), fill=GRAY_TEXT)
+
+    status_y = arrow_y + 40
+    status_x = card_x + 20
+    rounded_rect(d, [status_x, status_y, status_x + card_w - 40, status_y + 50], 8,
+                 fill=(255, 247, 237), outline=(254, 215, 170), width=1)
+    d.text((status_x + 18, status_y + 16),
+           "对话继续。今日已自动点击 38 次。",
+           font=cn(15), fill=BLACK)
+
+    img.save(OUT / "store-marquee-1400x560.png", optimize=True)
+    print("  ✓ store-marquee-1400x560.png")
+
+
 if __name__ == "__main__":
     print("Generating Chrome Web Store assets...")
     make_hero()
     make_popup()
     make_flow()
     make_promo()
+    make_marquee()
     print(f"\nAll assets in: {OUT}")
